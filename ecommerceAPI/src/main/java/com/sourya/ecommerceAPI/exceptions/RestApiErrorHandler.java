@@ -87,4 +87,14 @@ public class RestApiErrorHandler {
         LOGGER.info("JsonParseException :: request.getMethod()" + request.getMethod());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Error> handleResourceNotFoundException(HttpServletRequest request, ResourceNotFoundException ex, Locale locale) {
+        ex.printStackTrace();
+        Error error = ErrorUtils.createError(ErrorCode.RESOURCE_NOT_FOUND.getErrMsgKey(), ErrorCode.RESOURCE_NOT_FOUND.getErrCode(),
+                HttpStatus.NOT_FOUND.value()).setUrl(request.getRequestURL().toString())
+                .setReqMethod(request.getMethod());
+        LOGGER.info("ResourceNotFoundException :: request.getMethod()" + request.getMethod());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }

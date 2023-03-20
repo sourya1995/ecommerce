@@ -6,7 +6,9 @@ public enum ErrorCode {
     HTTP_MESSAGE_NOT_WRITABLE("ERR-0003", "Missing 'Accept' header. Please add 'Accept' header."),
     HTTP_MEDIA_TYPE_NOT_ACCEPTABLE("ERR-0004", "Requested 'Accept' header value is not supported. Please use application/json or application/xml as 'Accept' value."),
     JSON_PARSE_ERROR("ERR-0005", "Make sure request payload is a valid JSON object."),
-    HTTP_MESSAGE_NOT_READABLE("ERR-0006", "Make sure request payload is a valid JSON/XML object according to 'Content-Type' ");
+    HTTP_MESSAGE_NOT_READABLE("ERR-0006", "Make sure request payload is a valid JSON/XML object according to 'Content-Type' "),
+
+    RESOURCE_NOT_FOUND("ERR-0010", "Requested resource not found");
 
     private String errCode;
     private String errMsgKey;

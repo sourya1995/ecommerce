@@ -55,6 +55,10 @@ public class ProductEntity {
         this.imageUrl = imageUrl;
     }
 
+    public ProductEntity() {
+
+    }
+
     public UUID getId() {
         return id;
     }

@@ -1,6 +1,5 @@
 package com.sourya.ecommerceAPI.entity;
 
-import com.sourya.ecommerceAPI.model.Item;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
