@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.Instant;
 import java.util.Locale;
 
 @ControllerAdvice
@@ -96,5 +97,17 @@ public class RestApiErrorHandler {
                 .setReqMethod(request.getMethod());
         LOGGER.info("ResourceNotFoundException :: request.getMethod()" + request.getMethod());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(GenericAlreadyExistsException.class)
+    public ResponseEntity<Error> handleGenericAlreadyExistsException(HttpServletRequest request, GenericAlreadyExistsException ex, Locale locale) {
+        ex.printStackTrace();
+        Error error = ErrorUtils.createError(ErrorCode.GENERIC_ALREADY_EXISTS.getErrMsgKey(), ErrorCode.GENERIC_ALREADY_EXISTS.getErrCode(),
+                HttpStatus.NOT_ACCEPTABLE.value()).setUrl(request.getRequestURL().toString())
+                .setReqMethod(request.getMethod())
+                .setTimestamp(Instant.now());
+        LOGGER.info("GenericAlreadyExistsException :: request.getMethod()" + request.getMethod());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_ACCEPTABLE);
     }
 }

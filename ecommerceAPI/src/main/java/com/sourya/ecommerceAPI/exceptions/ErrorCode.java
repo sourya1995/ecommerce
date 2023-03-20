@@ -8,7 +8,9 @@ public enum ErrorCode {
     JSON_PARSE_ERROR("ERR-0005", "Make sure request payload is a valid JSON object."),
     HTTP_MESSAGE_NOT_READABLE("ERR-0006", "Make sure request payload is a valid JSON/XML object according to 'Content-Type' "),
 
-    RESOURCE_NOT_FOUND("ERR-0010", "Requested resource not found");
+
+    RESOURCE_NOT_FOUND("ERR-0010", "Requested resource not found"),
+    GENERIC_ALREADY_EXISTS("ERR-0013", "Already exists.");
 
     private String errCode;
     private String errMsgKey;

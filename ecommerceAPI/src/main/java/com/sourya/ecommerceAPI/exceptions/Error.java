@@ -3,6 +3,8 @@ package com.sourya.ecommerceAPI.exceptions;
 
 import org.apache.logging.log4j.util.Strings;
 
+import java.time.Instant;
+
 public class Error {
     private static final long serialVersionUID = 1L;
     private String errorCode;
@@ -11,6 +13,8 @@ public class Error {
     private String url = "not available";
 
     private String reqMethod = "Not available";
+
+    private Instant timestamp;
 
     public String getReqMethod() {
         return reqMethod;
@@ -54,5 +58,14 @@ public class Error {
             this.url = url;
         }
        return this;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    public Error setTimestamp(Instant now) {
+        this.timestamp = timestamp;
+        return this;
     }
 }
