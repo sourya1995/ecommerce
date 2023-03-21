@@ -1,5 +1,6 @@
 package com.sourya.ecommerceAPI.hateoas;
 
+import com.sourya.ecommerceAPI.controllers.AddressController;
 import com.sourya.ecommerceAPI.entity.AddressEntity;
 import com.sourya.ecommerceAPI.model.Address;
 import org.springframework.beans.BeanUtils;

@@ -1,5 +1,6 @@
 package com.sourya.ecommerceAPI.hateoas;
 
+import com.sourya.ecommerceAPI.controllers.CardController;
 import com.sourya.ecommerceAPI.entity.CardEntity;
 import com.sourya.ecommerceAPI.model.Card;
 import org.springframework.beans.BeanUtils;

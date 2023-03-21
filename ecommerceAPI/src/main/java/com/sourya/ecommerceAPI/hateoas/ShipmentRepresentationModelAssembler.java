@@ -1,5 +1,6 @@
 package com.sourya.ecommerceAPI.hateoas;
 
+import com.sourya.ecommerceAPI.controllers.ShipmentController;
 import com.sourya.ecommerceAPI.entity.ShipmentEntity;
 import com.sourya.ecommerceAPI.model.Shipment;
 import org.springframework.beans.BeanUtils;
