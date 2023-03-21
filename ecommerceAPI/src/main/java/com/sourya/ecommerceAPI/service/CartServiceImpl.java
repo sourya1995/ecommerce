@@ -2,7 +2,9 @@ package com.sourya.ecommerceAPI.service;
 
 import com.sourya.ecommerceAPI.entity.CartEntity;
 import com.sourya.ecommerceAPI.entity.ItemEntity;
+import com.sourya.ecommerceAPI.exceptions.CustomerNotFoundException;
 import com.sourya.ecommerceAPI.exceptions.GenericAlreadyExistsException;
+import com.sourya.ecommerceAPI.exceptions.ItemNotFoundException;
 import com.sourya.ecommerceAPI.model.Item;
 import com.sourya.ecommerceAPI.repository.CartRepository;
 import com.sourya.ecommerceAPI.repository.UserRepository;
@@ -13,6 +15,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
+
+import static org.springframework.objenesis.instantiator.util.UnsafeUtils.getUnsafe;
 
 public class CartServiceImpl implements CartService{
 
@@ -60,26 +66,54 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public void deleteCart(String customerId) {
+        CartEntity entity = getCartByCustomerId(customerId);
+        repository.deleteById(entity.getId());
 
     }
 
     @Override
     public void deleteItemFromCart(String customerId, String itemId) {
+        CartEntity entity = getCartByCustomerId(customerId);
+        List<ItemEntity> updatedItems = entity.getItems().stream()
+                .filter(i -> !i.getProduct().getId().equals(UUID.fromString(itemId))).collect(Collectors.toList());
+        entity.setItems(updatedItems);
+        repository.save(entity);
 
     }
 
     @Override
     public CartEntity getCartByCustomerId(String customerId) {
-        return null;
+        CartEntity entity = repository.findByCustomerId(UUID.fromString(customerId))
+                .orElse(new CartEntity());
+        if(Objects.isNull(entity.getUser())) {
+            entity.setUser(userRepo.findById(UUID.fromString(customerId))
+                    .orElseThrow(() -> new CustomerNotFoundException(
+                            String.format(" - %s", customerId)
+                    )));
+
+
+        }
+        return entity;
     }
 
     @Override
     public List<Item> getCartItemsByCustomerId(String customerId) {
-        return null;
+        CartEntity entity = getCartByCustomerId(customerId);
+        return itemService.toModelList(entity.getItems());
     }
 
     @Override
     public Item getCartItemsByItemId(String customerId, String itemId) {
-        return null;
+        CartEntity entity = getCartByCustomerId(customerId);
+        AtomicReference<ItemEntity> itemEntity = new AtomicReference<>();
+        entity.getItems().forEach(i -> {
+            if(i.getProduct().getId().equals(UUID.fromString(itemId))) {
+                itemEntity.set(i);
+            }
+        });
+        if(Objects.nonNull(itemEntity.get())){
+            getUnsafe().throwException(new ItemNotFoundException(String.format(" - %s ", itemId)));
+        }
+        return itemService.toModel(itemEntity.get());
     }
 }

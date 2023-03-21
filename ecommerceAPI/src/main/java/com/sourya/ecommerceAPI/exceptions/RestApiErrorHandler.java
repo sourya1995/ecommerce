@@ -99,6 +99,27 @@ public class RestApiErrorHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(CustomerNotFoundException.class)
+    public ResponseEntity<Error> handleCustomerNotFoundException(HttpServletRequest request, CustomerNotFoundException ex, Locale locale) {
+        ex.printStackTrace();
+        Error error = ErrorUtils.createError(ErrorCode.CUSTOMER_NOT_FOUND.getErrMsgKey(), ErrorCode.CUSTOMER_NOT_FOUND.getErrCode(),
+                HttpStatus.NOT_FOUND.value()).setUrl(request.getRequestURL().toString())
+                .setReqMethod(request.getMethod());
+        LOGGER.info("CustomerNotFoundException :: request.getMethod()" + request.getMethod());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<Error> handleItemNotFoundException(HttpServletRequest request, ItemNotFoundException ex, Locale locale) {
+        ex.printStackTrace();
+        Error error = ErrorUtils.createError(ErrorCode.ITEM_NOT_FOUND.getErrMsgKey(), ErrorCode.ITEM_NOT_FOUND.getErrCode(),
+                HttpStatus.NOT_FOUND.value()).setUrl(request.getRequestURL().toString())
+                .setReqMethod(request.getMethod());
+        LOGGER.info("ItemNotFoundException :: request.getMethod()" + request.getMethod());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+
+    }
+
     @ExceptionHandler(GenericAlreadyExistsException.class)
     public ResponseEntity<Error> handleGenericAlreadyExistsException(HttpServletRequest request, GenericAlreadyExistsException ex, Locale locale) {
         ex.printStackTrace();

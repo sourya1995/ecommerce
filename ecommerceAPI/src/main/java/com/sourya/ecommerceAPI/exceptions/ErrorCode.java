@@ -10,6 +10,10 @@ public enum ErrorCode {
 
 
     RESOURCE_NOT_FOUND("ERR-0010", "Requested resource not found"),
+
+    CUSTOMER_NOT_FOUND("ERR-0011", "Requested customer not found"),
+
+    ITEM_NOT_FOUND("ERR-0012", "Requested item not found"),
     GENERIC_ALREADY_EXISTS("ERR-0013", "Already exists.");
 
     private String errCode;
