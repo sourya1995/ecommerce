@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "053d69f7-82bb-4a88-87cc-dc27e1d30f83",
-    "name": "Chapter04",
-    "description": "Chapter 04 - Biz logic for APIs \r\nBook - Modern API Development with Spring and Spring Boot",
+    "name": "ecommerce REST",
+    "description": "Basic Postman Collection for REST API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
